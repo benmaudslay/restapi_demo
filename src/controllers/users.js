@@ -41,7 +41,7 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
-  getAllPosts,
+  getAllUsers,
   addUser,
   updateUser,
   deleteUser,
