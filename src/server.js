@@ -100,6 +100,27 @@ app.post("/posts/:user_id", async (req, res) => {
   }
 });
 
+app.patch("/posts/:id", async (req, res) => {
+  try {
+    const post = await Post.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    console.log(post);
+    res.status(200).send(post);
+  } catch (error) {
+    res.status(404).send({ message: "post not found" });
+  }
+});
+
+app.delete("/posts/:id", async (req, res) => {
+  try {
+    const post = await Post.findByIdAndDelete(req.params.id);
+    res.status(200).send(post);
+  } catch (error) {
+    res.status(404).send({ message: "post not found" });
+  }
+});
+
 // server
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
