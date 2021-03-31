@@ -1,5 +1,6 @@
 require("./db/connection");
 const express = require("express");
+const { Post } = require("./models/Post");
 const { User } = require("./models/User");
 
 const port = process.env.PORT || 5000;
@@ -63,6 +64,39 @@ app.delete("/user/:id", async (req, res) => {
     //   .then((user) => res.send(user))
   } catch (error) {
     res.status(404).send({ message: "user not found" });
+  }
+});
+
+// post routes
+app.get("/posts", async (req, res) => {
+  try {
+    const allPosts = await Post.find({});
+    res.status(200).send(allPosts);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.get("/posts/:user_id", async (req, res) => {
+  try {
+    const allPosts = await Post.find({ author: req.params.user_id });
+    res.status(200).send(allPosts);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.post("/posts/:user_id", async (req, res) => {
+  try {
+    const post = new Post(req.body);
+    post.author = req.params.user_id;
+    const returnedValue = await post.save();
+
+    res.status(201).send(returnedValue);
+  } catch (error) {
+    res.status(400).send(error);
   }
 });
 
