@@ -6,7 +6,6 @@ const {
   updatePost,
   deletePost,
 } = require("../controllers/posts");
-const { Post } = require("../models/Post");
 
 const postRouter = Router();
 
